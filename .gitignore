@@ -1,0 +1,6 @@
+**/.terraform/
+**/.terragrunt-cache/
+**/*.retry
+**/*.idea
+**/*.DS_Store
+**/*terraform.tfstate
