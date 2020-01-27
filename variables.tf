@@ -35,6 +35,8 @@ variable "backend_http_settings" {
     request_timeout                     = number
     probe_name                          = string
     pick_host_name_from_backend_address = bool
+    connection_draining_enabled         = bool
+    drain_timeout                       = number
   }))
 }
 variable "ssl_certificates" {
@@ -102,6 +104,10 @@ variable "probes" {
     path                                      = string
     is_https                                  = bool
     pick_host_name_from_backend_http_settings = bool
+    host                                      = string
+    interval                                  = number
+    timeout                                   = number
+    unhealthy_threshold                       = number
   }))
 }
 variable "url_path_maps" {
@@ -146,5 +152,11 @@ variable "vault_endpoint" {
   description = "vault endpoint"
   type        = string
   default     = null
+}
+
+variable "frontend_ip_configuration_name" {
+description = "frontend ip name"
+type        = string
+default     = "frontend_ip_configuration_fip"
 }
 

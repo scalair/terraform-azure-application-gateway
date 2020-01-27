@@ -1,7 +1,6 @@
 # since these variables are re-used - a locals block makes this more maintainable
 locals {
-  frontend_port_name             = "frontend_port_fp"
-  frontend_ip_configuration_name = "frontend_ip_configuration_fip"
+  frontend_ip_configuration_name = var.frontend_ip_configuration_name
 }
 
 resource "azurerm_application_gateway" "application-gw" {
@@ -57,6 +56,10 @@ resource "azurerm_application_gateway" "application-gw" {
       request_timeout                     = backend_http_settings.value.request_timeout
       probe_name                          = backend_http_settings.value.probe_name
       pick_host_name_from_backend_address = backend_http_settings.value.pick_host_name_from_backend_address
+      connection_draining        {
+        enabled = backend_http_settings.value.connection_draining_enabled
+        drain_timeout_sec = backend_http_settings.value.connection_draining_enabled ? backend_http_settings.value.drain_timeout : 60
+      }
     }
   }
 
@@ -71,14 +74,15 @@ resource "azurerm_application_gateway" "application-gw" {
   dynamic "probe" {
     for_each = var.probes
     content {
-      interval                                  = 30
+      interval                                  = probe.value.interval
       name                                      = probe.value.name
       path                                      = probe.value.path
       protocol                                  = probe.value.is_https ? "Https" : "Http"
-      timeout                                   = 30
-      unhealthy_threshold                       = 3
+      timeout                                   = probe.value.timeout
+      unhealthy_threshold                       = probe.value.unhealthy_threshold
       pick_host_name_from_backend_http_settings = probe.value.pick_host_name_from_backend_http_settings
-    }
+      host                                      = probe.value.host
+}
   }
 
   dynamic "ssl_certificate" {

@@ -10,6 +10,7 @@ inputs = {
   vault_endpoint = ""
   path_certificate_data_on_vault = ""
   pass_path_on_vault = ""
+  frontend_ip_configuration_name = "frontend_ip_configuration_fip"
 
   public_ip_address_id = ""
   subnet_id     = ""
@@ -21,20 +22,21 @@ inputs = {
   name                      = "appgw"
 
   probes                    = [
-    {
+    {   
         name                    = "probe1",
         path                    = "/",
         is_https                = false
-        pick_host_name_from_backend_http_settings = true
-        #host                      = "localhost"   # not implemented in the model
-
+        pick_host_name_from_backend_http_settings = false  # use this parameter if "host" is not used.
+        host                    = "test1234.com"  # can't be set if "pick_host_name_from_backend_http_settings" is true
+        interval                = 30
+        timeout                 = 30
+        unhealthy_threshold     = 3
     }
   ]
 
 
   backend_http_settings     = [
-    {
-        name = "backend_http_settings",
+    {   name = "backend_http_settings",
         has_cookie_based_affinity = false,
         path                      = "/",
         port                      = 80,
@@ -42,6 +44,8 @@ inputs = {
         request_timeout           = 30,
         probe_name                = "probe1",
         pick_host_name_from_backend_address = true
+        connection_draining_enabled = true
+        drain_timeout 
     }
   ]
   backend_address_pools     = [
@@ -120,7 +124,7 @@ inputs = {
   #custom_error_configurations    = [
   #  {
   #    status_code                = "HttpStatus403", # can take only the values HttpStatus403 or HttpStatus502
-  #    custom_error_page_url      = "https://commonusageaushoppping.z16.web.core.windows.net/servererror.html"
+  #    custom_error_page_url      = "https://azure_blob/servererror.html"
   #  }
   #]
 
