@@ -71,7 +71,7 @@ resource "azurerm_application_gateway" "application-gw" {
     }
   }
   
-    dynamic "trusted_root_certificates" {
+    dynamic "trusted_root_certificate" {
     for_each = var.trusted_root_certificates
     content {
       name                                      = trusted_root_certificate.value.name
