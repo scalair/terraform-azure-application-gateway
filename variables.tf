@@ -37,7 +37,7 @@ variable "backend_http_settings" {
     pick_host_name_from_backend_address = bool
     connection_draining_enabled         = bool
     drain_timeout                       = number
-    trusted_root_certificate_name       = list
+    trusted_root_certificate_name       = list(string)
   }))
 }
 variable "ssl_certificates" {
