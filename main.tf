@@ -60,6 +60,9 @@ resource "azurerm_application_gateway" "application-gw" {
         enabled = backend_http_settings.value.connection_draining_enabled
         drain_timeout_sec = backend_http_settings.value.connection_draining_enabled ? backend_http_settings.value.drain_timeout : 60
       }
+      trusted_root_certificate {
+        name = backend_http_settings.value.trusted_root_certificate_name
+      }
     }
   }
 
