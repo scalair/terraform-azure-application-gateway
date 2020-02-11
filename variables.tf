@@ -21,7 +21,7 @@ variable "backend_address_pools" {
   type = list(object({
     name         = string
     ip_addresses = list(string)
-    fqdns        = list(string)
+    #fqdns        = list(string)
   }))
 }
 variable "backend_http_settings" {
