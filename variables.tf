@@ -67,6 +67,16 @@ variable "authentication_certificates" {
   default = []
 }
 
+variable "trusted_root_certificates" {
+  description = "Trusted root certificates for the backend"
+  type = list(object({
+    name                       = string
+    use_vault                  = bool
+    path_to_root_certificate_data   = string
+  }))
+  default = []
+}
+
 variable "request_routing_rules" {
   description = "Request routing rules to be used for listeners."
   type = list(object({
