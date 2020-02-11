@@ -70,6 +70,14 @@ resource "azurerm_application_gateway" "application-gw" {
       data                                      = authentication_certificate.value.use_vault ? data.vault_generic_secret.identity.data[authentication_certificate.value.name] : filebase64(authentication_certificate.value.path_to_certificate_data)
     }
   }
+  
+    dynamic "trusted_root_certificates" {
+    for_each = var.trusted_root_certificates
+    content {
+      name                                      = trusted_root_certificate.value.name
+      data                                      = trusted_root_certificate.value.use_vault ? data.vault_generic_secret.identity.data[trusted_root_certificate.value.name] : filebase64(trusted_root_certificate.value.path_to_certificate_data)
+    }
+  }
 
   dynamic "probe" {
     for_each = var.probes
