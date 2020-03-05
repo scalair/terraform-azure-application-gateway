@@ -1,9 +1,14 @@
 # since these variables are re-used - a locals block makes this more maintainable
+provider "azurerm" {
+  features {}
+}
+
 locals {
   frontend_ip_configuration_name = var.frontend_ip_configuration_name
 }
 
 resource "azurerm_application_gateway" "application-gw" {
+#resource "azurerm_application_gateway" "appgw" {
   name                = var.name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
@@ -19,20 +24,16 @@ resource "azurerm_application_gateway" "application-gw" {
     #subnet_id = azurerm_subnet.subnet.id
     subnet_id = var.subnet_id
   }
-
   frontend_port {
-    name = "https-port"
-    port = 443
-  }
-
-  frontend_port {
-    name = "http-port"
+    name = var.frontend_http_port_name
     port = 80
   }
-
+  frontend_port {
+    name = var.frontend_https_port_name
+    port = 443
+  }
   frontend_ip_configuration {
     name = local.frontend_ip_configuration_name
-    #public_ip_address_id = azurerm_public_ip.publicip.id
     public_ip_address_id = var.public_ip_address_id
   }
 
@@ -61,6 +62,13 @@ resource "azurerm_application_gateway" "application-gw" {
         drain_timeout_sec = backend_http_settings.value.connection_draining_enabled ? backend_http_settings.value.drain_timeout : 60
       }
       trusted_root_certificate_names = backend_http_settings.value.trusted_root_certificate_name
+      dynamic authentication_certificate {
+         for_each = backend_http_settings.value.authentication_certificates
+         content {
+            name = authentication_certificate.value.name
+         }
+
+      }
     }
   }
 
@@ -91,7 +99,10 @@ resource "azurerm_application_gateway" "application-gw" {
       unhealthy_threshold                       = probe.value.unhealthy_threshold
       pick_host_name_from_backend_http_settings = probe.value.pick_host_name_from_backend_http_settings
       host                                      = probe.value.host
-}
+      match {
+        status_code =  probe.value.status_code
+      }
+    }
   }
 
   dynamic "ssl_certificate" {
@@ -108,10 +119,11 @@ resource "azurerm_application_gateway" "application-gw" {
     content {
       name                           = http_listener.value.name
       frontend_ip_configuration_name = local.frontend_ip_configuration_name
-      frontend_port_name             = http_listener.value.is_https ? "https-port" : "http-port"
+      frontend_port_name             = http_listener.value.is_https ? var.frontend_https_port_name : var.frontend_http_port_name
       protocol                       = http_listener.value.is_https ? "Https" : "Http"
       ssl_certificate_name           = http_listener.value.is_https ? http_listener.value.ssl_certificate_name : null
       host_name                      = http_listener.value.host_name
+      require_sni                    = http_listener.value.require_sni
     }
   }
 

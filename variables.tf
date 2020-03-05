@@ -37,6 +37,8 @@ variable "backend_http_settings" {
     pick_host_name_from_backend_address = bool
     connection_draining_enabled         = bool
     drain_timeout                       = number
+    authentication_certificates         = list(map(any))
+    #authentication_certificate2         =  string
     trusted_root_certificate_name       = list(string)
   }))
 }
@@ -119,6 +121,7 @@ variable "probes" {
     interval                                  = number
     timeout                                   = number
     unhealthy_threshold                       = number
+    status_code                               = list(string)
   }))
 }
 variable "url_path_maps" {
@@ -166,8 +169,17 @@ variable "vault_endpoint" {
 }
 
 variable "frontend_ip_configuration_name" {
-description = "frontend ip name"
-type        = string
-default     = "frontend_ip_configuration_fip"
+  description = "frontend ip name"
+  type        = string
+  default     = "frontend_ip_configuration_fip"
 }
 
+variable "frontend_http_port_name" {
+  description = "frontend http port name  name"
+  type        = string
+}
+
+variable "frontend_https_port_name" {
+  description = "frontend https port name  name"
+  type        = string
+}
