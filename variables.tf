@@ -38,7 +38,6 @@ variable "backend_http_settings" {
     connection_draining_enabled         = bool
     drain_timeout                       = number
     authentication_certificates         = list(map(any))
-    #authentication_certificate2         =  string
     trusted_root_certificate_name       = list(string)
   }))
 }

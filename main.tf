@@ -2,13 +2,10 @@
 provider "azurerm" {
   features {}
 }
-
 locals {
   frontend_ip_configuration_name = var.frontend_ip_configuration_name
 }
-
 resource "azurerm_application_gateway" "application-gw" {
-#resource "azurerm_application_gateway" "appgw" {
   name                = var.name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
@@ -21,7 +18,6 @@ resource "azurerm_application_gateway" "application-gw" {
 
   gateway_ip_configuration {
     name      = "my-gateway-ip-configuration"
-    #subnet_id = azurerm_subnet.subnet.id
     subnet_id = var.subnet_id
   }
   frontend_port {
