@@ -142,6 +142,7 @@ resource "azurerm_application_gateway" "application-gw" {
       name                       = redirect_configuration.value.name
       redirect_type              = redirect_configuration.value.redirect_type
       target_listener_name       = redirect_configuration.value.target_listener_name
+      target_url                 = redirect_configuration.value.target_url
       include_path               = redirect_configuration.value.include_path
       include_query_string       = redirect_configuration.value.include_query_string
     }
@@ -153,6 +154,7 @@ resource "azurerm_application_gateway" "application-gw" {
       name                               = url_path_map.value.name
       default_backend_http_settings_name = url_path_map.value.default_backend_http_settings_name
       default_backend_address_pool_name  = url_path_map.value.default_backend_address_pool_name
+      default_redirect_configuration_name =  url_path_map.value.default_redirect_configuration_name
 
       dynamic "path_rule" {
         for_each = url_path_map.value.path_rules
@@ -160,6 +162,7 @@ resource "azurerm_application_gateway" "application-gw" {
           name                       = path_rule.value.name
           backend_address_pool_name  = path_rule.value.backend_address_pool_name
           backend_http_settings_name = path_rule.value.backend_http_settings_name
+          redirect_configuration_name = path_rule.value.redirect_configuration_name
           paths                      = path_rule.value.paths
         }
       }

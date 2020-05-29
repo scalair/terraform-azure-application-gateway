@@ -130,10 +130,12 @@ variable "url_path_maps" {
     name                               = string
     default_backend_http_settings_name = string
     default_backend_address_pool_name  = string
-    path_rules = list(object({
+    default_redirect_configuration_name = string
+path_rules = list(object({
       name                       = string
       backend_address_pool_name  = string
       backend_http_settings_name = string
+      redirect_configuration_name = string
       paths                      = list(string)
     }))
   }))
