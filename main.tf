@@ -47,6 +47,7 @@ resource "azurerm_application_gateway" "application-gw" {
     content {
       name                                = backend_http_settings.value.name
       cookie_based_affinity               = backend_http_settings.value.has_cookie_based_affinity ? "Enabled" : "Disabled"
+      affinity_cookie_name                = backend_http_settings.value.affinity_cookie_name
       path                                = backend_http_settings.value.path
       port                                = backend_http_settings.value.port
       protocol                            = backend_http_settings.value.is_https ? "Https" : "Http"
