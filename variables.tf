@@ -29,6 +29,7 @@ variable "backend_http_settings" {
   type = list(object({
     name                                = string
     has_cookie_based_affinity           = bool
+    affinity_cookie_name                = string
     path                                = string
     port                                = number
     is_https                            = bool
