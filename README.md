@@ -1,15 +1,11 @@
 # terrafrom-azure-application-gateway
 
-Usage Example 
-----------------
+## Usage Example
 
-```
+```hcl
 ---
 
 inputs = {
-  vault_endpoint = ""
-  path_certificate_data_on_vault = ""
-  pass_path_on_vault = ""
   frontend_ip_configuration_name = "frontend_ip_configuration_fip"
 
   public_ip_address_id = ""
@@ -59,16 +55,14 @@ inputs = {
   #authentication_certificates = [
   #  {
   #    name                = "XCL1MPRWEBP1",
-  #    use_vault           = false  # if true "path_to_certificate_data" is not used. "path_vault_certificate_data" is used
-  #    path_to_certificate_data = "/Users/yehia/Desktop/test/certificates/web2/localhost.crt"
+  #    data = "/Users/yehia/Desktop/test/certificates/web2/localhost.crt"
   #  }
   #]
 
   ssl_certificates            = [
     {
         name                = "clochedor",
-        use_vault = false
-        path_to_certificate_data = "/Users/yehia/Desktop/test/certificates/certificate.pfx"
+        data = "/Users/yehia/Desktop/test/certificates/certificate.pfx"
         password            = "cl0ched0R"
     }
   ]
@@ -130,4 +124,3 @@ inputs = {
 
 }
 ```
-
