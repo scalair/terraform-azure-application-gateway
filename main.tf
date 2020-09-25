@@ -69,16 +69,16 @@ resource "azurerm_application_gateway" "application-gw" {
   dynamic "authentication_certificate" {
     for_each = var.authentication_certificates
     content {
-      name                                      = authentication_certificate.value.name
-      data                                      = authentication_certificate.value.use_vault ? data.vault_generic_secret.identity.data[authentication_certificate.value.name] : filebase64(authentication_certificate.value.path_to_certificate_data)
+      name = authentication_certificate.value.name
+      data = authentication_certificate.value.data
     }
   }
   
     dynamic "trusted_root_certificate" {
     for_each = var.trusted_root_certificates
     content {
-      name                                      = trusted_root_certificate.value.name
-      data                                      = trusted_root_certificate.value.use_vault ? data.vault_generic_secret.identity.data[trusted_root_certificate.value.name] : filebase64(trusted_root_certificate.value.path_to_root_certificate_data)
+      name = trusted_root_certificate.value.name
+      data = trusted_root_certificate.value.data
     }
   }
 
@@ -102,9 +102,9 @@ resource "azurerm_application_gateway" "application-gw" {
   dynamic "ssl_certificate" {
     for_each = var.ssl_certificates
     content {
-      name                                      = ssl_certificate.value.name
-      data                                      = ssl_certificate.value.use_vault ? data.vault_generic_secret.identity.data[ssl_certificate.value.name] : filebase64(ssl_certificate.value.path_to_certificate_data)
-      password                                  = ssl_certificate.value.use_vault ? data.vault_generic_secret.passwords.data[ssl_certificate.value.name] : ssl_certificate.value.password
+      name = ssl_certificate.value.name
+      data = ssl_certificate.value.data
+      password = ssl_certificate.value.password
     }
   }
 

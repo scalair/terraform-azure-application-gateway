@@ -47,14 +47,7 @@ variable "ssl_certificates" {
   type = list(map(any))
   default = []
 }
-#variable "http_listeners" {
-#  description = "List of HTTP listeners."
-#  type = list(object({
-#    name     = string
-#    is_https = bool
-#    ssl_certificate_name = string
-#  }))
-#}
+
 variable "http_listeners" {
 description = "List of HTTP listeners."
 type = list(map(any))
@@ -63,9 +56,8 @@ type = list(map(any))
 variable "authentication_certificates" {
   description = "Authentication certificates for the backend"
   type = list(object({
-    name                       = string
-    use_vault                  = bool
-    path_to_certificate_data   = string
+    name = string
+    data = string
   }))
   default = []
 }
@@ -74,8 +66,7 @@ variable "trusted_root_certificates" {
   description = "Trusted root certificates for the backend"
   type = list(object({
     name                       = string
-    use_vault                  = bool
-    path_to_root_certificate_data   = string
+    data                       = string
   }))
   default = []
 }
@@ -149,25 +140,6 @@ variable "custom_error_configurations" {
     custom_error_page_url        = string
   }))
   default = []
-}
-
-
-variable "path_certificate_data_on_vault" {
-  description = "path to certificate data"
-  type        = string
-  default     = null
-}
-
-variable "pass_path_on_vault" {
-  description = "password or  path to certificate password"
-  type        = string
-  default     = null
-}
-
-variable "vault_endpoint" {
-  description = "vault endpoint"
-  type        = string
-  default     = null
 }
 
 variable "frontend_ip_configuration_name" {
