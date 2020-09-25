@@ -1,15 +1,11 @@
 # terrafrom-azure-application-gateway
 
-Usage Example 
-----------------
+## Usage Example
 
-```
+```hcl
 ---
 
 inputs = {
-  vault_endpoint = ""
-  path_certificate_data_on_vault = ""
-  pass_path_on_vault = ""
   frontend_ip_configuration_name = "frontend_ip_configuration_fip"
 
   public_ip_address_id = ""
@@ -130,4 +126,3 @@ inputs = {
 
 }
 ```
-
