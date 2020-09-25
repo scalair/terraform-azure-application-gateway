@@ -55,16 +55,14 @@ inputs = {
   #authentication_certificates = [
   #  {
   #    name                = "XCL1MPRWEBP1",
-  #    use_vault           = false  # if true "path_to_certificate_data" is not used. "path_vault_certificate_data" is used
-  #    path_to_certificate_data = "/Users/yehia/Desktop/test/certificates/web2/localhost.crt"
+  #    data = "/Users/yehia/Desktop/test/certificates/web2/localhost.crt"
   #  }
   #]
 
   ssl_certificates            = [
     {
         name                = "clochedor",
-        use_vault = false
-        path_to_certificate_data = "/Users/yehia/Desktop/test/certificates/certificate.pfx"
+        data = "/Users/yehia/Desktop/test/certificates/certificate.pfx"
         password            = "cl0ched0R"
     }
   ]
