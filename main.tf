@@ -1,7 +1,4 @@
 # since these variables are re-used - a locals block makes this more maintainable
-provider "azurerm" {
-  features {}
-}
 locals {
   frontend_ip_configuration_name = var.frontend_ip_configuration_name
 }
