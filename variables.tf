@@ -157,3 +157,9 @@ variable "frontend_https_port_name" {
   description = "frontend https port name  name"
   type        = string
 }
+
+variable "lifecycle_ignore_ssl" {
+  type          = bool
+  description   = "Whether to ignore future changes on SSL certificates (e.g: handled by an external component). Changing this forces a new resource to be created."
+  default       = false
+}
