@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.1
+
+- Add some outputs
+
 ## v2.2.0
 
 - define 2 `azurerm_application_gateway`, but deploy only one regarding the `lifecycle_ignore_ssl` variable. Acts as a workaround of the unsupport of [dynamic terraform lifecycle](https://github.com/hashicorp/terraform/issues/24188)
