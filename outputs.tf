@@ -7,5 +7,5 @@ output "resource_group_name" {
 }
 
 output "location" {
-  value = var.location
+  value = var.resource_group_location
 }
