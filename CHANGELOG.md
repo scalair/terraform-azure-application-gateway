@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.2
+
+- Fix output
+
 ## v2.2.1
 
 - Add some outputs
