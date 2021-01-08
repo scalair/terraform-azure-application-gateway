@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.3.0
+
+- add support for managed identities.
+- add support for SSL certificate in KeyVault.
+
 ## v2.2.2
 
 - Fix output

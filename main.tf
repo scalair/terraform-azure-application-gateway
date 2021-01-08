@@ -115,8 +115,9 @@ resource "azurerm_application_gateway" "application-gw" {
     for_each = var.ssl_certificates
     content {
       name = ssl_certificate.value.name
-      data = ssl_certificate.value.data
+      data = lookup(ssl_certificate.value, "data", null)
       password = ssl_certificate.value.password
+      key_vault_secret_id = lookup(ssl_certificate.value, "key_vault_secret_id", null)
     }
   }
 
@@ -184,6 +185,15 @@ resource "azurerm_application_gateway" "application-gw" {
     content {
       status_code                    = custom_error_configuration.value.status_code
       custom_error_page_url          = custom_error_configuration.value.custom_error_page_url
+    }
+  }
+
+  dynamic "identity" {
+    for_each = var.identity_ids
+
+    content {
+      type          = "UserAssigned"
+      identity_ids  = var.identity_ids
     }
   }
 }
@@ -290,9 +300,10 @@ resource "azurerm_application_gateway" "application-gw-no-ssl" {
   dynamic "ssl_certificate" {
     for_each = var.ssl_certificates
     content {
-      name = ssl_certificate.value.name
-      data = ssl_certificate.value.data
-      password = ssl_certificate.value.password
+      name                = ssl_certificate.value.name
+      data                = ssl_certificate.value.data
+      password            = ssl_certificate.value.password
+      key_vault_secret_id = ssl_certificate.value.key_vault_secret_id
     }
   }
 

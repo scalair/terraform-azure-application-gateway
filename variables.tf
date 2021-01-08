@@ -163,3 +163,10 @@ variable "lifecycle_ignore_ssl" {
   description   = "Whether to ignore future changes on SSL certificates (e.g: handled by an external component). Changing this forces a new resource to be created."
   default       = false
 }
+
+variable "identity_ids" {
+  type            = list(string)
+  description     = "(Optional) For TLS termination with Key Vault certificates, define a list of user-assigned managed identity, which Application Gateway uses to retrieve certificates from Key Vault."
+  default         = []
+}
+
