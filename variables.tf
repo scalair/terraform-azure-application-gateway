@@ -81,6 +81,7 @@ variable "request_routing_rules" {
     redirect_configuration_name = string
     is_path_based              = bool
     url_path_map_name          = string
+    priority          = number
   }))
 }
 variable "redirect_configurations" {

@@ -144,6 +144,7 @@ resource "azurerm_application_gateway" "application-gw" {
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
       redirect_configuration_name = request_routing_rule.value.redirect_configuration_name
       url_path_map_name          = request_routing_rule.value.url_path_map_name
+      priority                    = request_routing_rule.value.priority
     }
   }
 
